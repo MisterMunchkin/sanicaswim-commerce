@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types';
 
 class PayPalButton extends React.Component {
   constructor(props) {
@@ -10,6 +11,7 @@ class PayPalButton extends React.Component {
 
   componentDidMount()
   {
+    const { live } = this.props;
     this.setState({ isEnabled: true });
 
        // Render the PayPal button into #paypal-button-container
@@ -20,7 +22,7 @@ class PayPalButton extends React.Component {
           return actions.order.create({
               purchase_units: [{
                   amount: {
-                      value: '88.44'
+                    value: `${live.total.raw}`
                   }
               }]
           });
@@ -49,6 +51,10 @@ class PayPalButton extends React.Component {
       <div id='paypal-express-btn'></div>
     );
   }
+}
+
+PayPalButton.propTypes = {
+  live: PropTypes.object
 }
 
 export default PayPalButton;

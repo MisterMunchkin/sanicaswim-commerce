@@ -521,6 +521,7 @@ class CheckoutPage extends Component {
     return (
       <PaymentDetails
         gateways={checkout.gateways}
+        live={checkout.live}
         onChangeGateway={this.handleGatewayChange}
         selectedGateway={selectedGateway}
         cardNumber={cardNumber}

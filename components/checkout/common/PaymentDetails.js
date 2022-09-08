@@ -188,7 +188,12 @@ export default class PaymentDetails extends Component {
   }
 
   renderPayPal() {
-    const { gateways, onChangeGateway, selectedGateway } = this.props;
+    const {
+      gateways,
+      onChangeGateway,
+      selectedGateway,
+      live
+    } = this.props;
 
     if (!gateways || !gateways.available['paypal']) {
       return null;
@@ -209,7 +214,10 @@ export default class PaymentDetails extends Component {
 
         { selectedGateway === 'paypal' && (
             <div className="pl-5 pr-5 pb-3 ml-2">
-              <PayPalButton></PayPalButton>
+              <PayPalButton
+                live={live}
+              >
+              </PayPalButton>
             </div>
           )
         }
@@ -242,6 +250,7 @@ export default class PaymentDetails extends Component {
 
 PaymentDetails.propTypes = {
   gateways: PropTypes.object,
+  live: PropTypes.object,
   onChangeGateway: PropTypes.func,
   selectedGateway: PropTypes.string,
 }
