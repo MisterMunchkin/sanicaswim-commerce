@@ -11,6 +11,7 @@ import Root from '../../components/common/Root';
 import AddressForm from '../../components/checkout/common/AddressForm';
 import PaymentDetails from '../../components/checkout/common/PaymentDetails';
 import Loader from '../../components/checkout/Loader';
+import Image from 'next/image';
 import {
   generateCheckoutTokenFromCart as dispatchGenerateCheckout,
   getShippingOptionsForCheckout as dispatchGetShippingOptions,
@@ -36,18 +37,18 @@ class CheckoutPage extends Component {
 
       // string property names to conveniently identify inputs related to commerce.js validation errors
       // e.g error { param: "shipping[name]"}
-      'customer[first_name]': 'John',
-      'customer[last_name]': 'Doe',
-      'customer[email]': 'john@doe.com',
+      'customer[first_name]': '',
+      'customer[last_name]': '',
+      'customer[email]': '',
       'customer[phone]': '',
       'customer[id]': null,
-      'shipping[name]': 'John Doe',
-      'shipping[street]': '318 Homer Street',
+      'shipping[name]': '',
+      'shipping[street]': '',
       'shipping[street_2]': '',
-      'shipping[town_city]': 'Vancouver',
-      'shipping[region]': 'BC',
-      'shipping[postal_zip_code]': 'V6B 2V2',
-      'shipping[country]': 'CA',
+      'shipping[town_city]': '',
+      'shipping[region]': '',
+      'shipping[postal_zip_code]': '',
+      'shipping[country]': 'PH',
       'billing[name]': '',
       'billing[street]': '',
       'billing[street_2]': '',
@@ -60,11 +61,11 @@ class CheckoutPage extends Component {
       countries: {},
 
       'fulfillment[shipping_method]': '',
-      cardNumber: ccFormat('4242424242424242'),
-      expMonth: '11',
-      expYear: '22',
-      cvc: '123',
-      billingPostalZipcode: 'V6B 2V2',
+      cardNumber: ccFormat(''),
+      expMonth: '',
+      expYear: '',
+      cvc: '',
+      billingPostalZipcode: '',
 
       errors: {
         'fulfillment[shipping_method]': null,
@@ -76,9 +77,9 @@ class CheckoutPage extends Component {
         'shipping[postal_zip_code]': null
       },
 
-      discountCode: 'CUSTOMCOMMERCE',
+      discountCode: '',
 
-      selectedGateway: 'test_gateway',
+      selectedGateway: 'gcash',
       loading: false,
       // Optional if using Stripe, used to track steps of checkout using Stripe.js
       stripe: {
@@ -483,6 +484,8 @@ class CheckoutPage extends Component {
         .catch(this.handleCaptureError);
     }
 
+    //Add GCash and PayPal order here
+
     // Capture the order
     this.props.dispatchCaptureOrder(this.props.checkout.id, newOrder)
       .then(this.handleCaptureSuccess)
@@ -555,7 +558,14 @@ class CheckoutPage extends Component {
                     Cart
                   </a>
                 </Link>
-                <img src="/icon/arrow-right.svg" className="w-16 mx-1" alt="Arrow icon"/>
+                <Image
+                  src="/icon/arrow-right.svg"
+                  className="w-16 mx-1"
+                  alt="Arrow icon"
+                  height="20px"
+                  width="20px"
+                >
+                </Image>
                 <div className="font-size-caption font-weight-bold cursor-pointer">
                   Checkout
                 </div>
@@ -647,7 +657,7 @@ class CheckoutPage extends Component {
                               {
                                 shippingOptions && shippingOptions.map(option => (
                                   <option key={option.id} value={option.id}>
-                                  { `${option.description} - $${option.price.formatted_with_code}` }
+                                  { `${option.description} - ${option.price.formatted_with_code}` }
                                   </option>
                                 ))
                               }
@@ -762,7 +772,7 @@ class CheckoutPage extends Component {
                             </div>
                           </div>
                           <div className="text-right font-weight-semibold">
-                            ${item.line_total.formatted_with_code}
+                            {item.line_total.formatted_with_code}
                           </div>
                         </div>
                       </div>
@@ -817,7 +827,7 @@ class CheckoutPage extends Component {
                     Total amount
                   </p>
                   <p className="text-right font-weight-semibold font-size-title">
-                    $ { checkout.live ? checkout.live.total.formatted_with_code : '' }
+                    { checkout.live ? checkout.live.total.formatted_with_code : '' }
                   </p>
                 </div>
               </div>

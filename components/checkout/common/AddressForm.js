@@ -77,6 +77,7 @@ export default class AddressForm extends Component {
                 name={`${type}[country]`}
                 placeholder="Select a country"
                 value={country}
+                displayName={countries[country]}
               >
                 {
                   Object.entries(countries).map(([code, name]) => (
@@ -135,6 +136,7 @@ export default class AddressForm extends Component {
                 required
                 name={`${type}[region]`}
                 value={region}
+                displayName={this.state.subdivisions[region]}
                 placeholder="Select a region"
               >
                 {

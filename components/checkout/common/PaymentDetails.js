@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { CardElement } from '@stripe/react-stripe-js';
 import PropTypes from 'prop-types';
 import Radiobox from '../../common/atoms/Radiobox';
+import PayPalButton from '../gateways/PayPalButton';
 
 export default class PaymentDetails extends Component {
   /**
@@ -152,6 +153,70 @@ export default class PaymentDetails extends Component {
     );
   }
 
+  renderGCash() {
+    const { gateways, onChangeGateway, selectedGateway } = this.props;
+
+    //gcash gateway id gway_3wpgx6AxvdxxlY
+    var  gcashGateway = gateways?.manual?.find(m => m.id === 'gway_3wpgx6AxvdxxlY');
+
+    if (!gateways || !gateways.available['manual'] || !gcashGateway) {
+      return null;
+    }
+
+    return (
+      <div className="borderbottom border-color-gray500">
+        <label
+          onClick={() => onChangeGateway('gcash')}
+          className="p-3 d-flex align-items-center cursor-pointer"
+        >
+          <Radiobox
+            checked={selectedGateway === 'gcash'}
+            className="mr-3"
+          />
+          <p className="font-weight-medium">GCash</p>
+        </label>
+
+        {
+          selectedGateway === 'gcash' && (
+            <div className="pl-5 pr-3 pb-3 ml-2">
+              <label>GCash</label>
+            </div>
+          )
+        }
+      </div>
+    )
+  }
+
+  renderPayPal() {
+    const { gateways, onChangeGateway, selectedGateway } = this.props;
+
+    if (!gateways || !gateways.available['paypal']) {
+      return null;
+    }
+
+    return (
+      <div className="borderbottom border-color-gray500">
+        <label
+          onClick={() => onChangeGateway('paypal')}
+          className="p-3 d-flex align-items-center cursor-pointer"
+        >
+          <Radiobox
+            checked={selectedGateway === 'paypal'}
+            className="mr-3"
+          />
+          <p className="font-weight-medium">PayPal</p>
+        </label>
+
+        { selectedGateway === 'paypal' && (
+            <div className="pl-5 pr-5 pb-3 ml-2">
+              <PayPalButton></PayPalButton>
+            </div>
+          )
+        }
+      </div>
+    );
+  }
+
   /**
    * Render the payment view, including payment options for each supported gateway
    *
@@ -166,6 +231,8 @@ export default class PaymentDetails extends Component {
         <div className="border border-color-gray400 mb-5">
           { this.renderTestGateway() }
           { this.renderStripe() }
+          { this.renderGCash() }
+          { this.renderPayPal() }
           { /* todo support other gateways here */ }
         </div>
       </>
