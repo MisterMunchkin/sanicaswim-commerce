@@ -19,6 +19,7 @@ export default class PaymentDetails extends Component {
       expMonth,
       expYear,
       cvc,
+      billingPostalZipcode,
     } = this.props;
 
     if (!gateways || !gateways.available['test_gateway']) {
@@ -94,6 +95,20 @@ export default class PaymentDetails extends Component {
                     value={expYear}
                     className="rounded-0 w-100"
                     placeholder="YY"
+                  />
+                </label>
+              </div>
+              <div className="col-sm-3">
+                <label className="w-100 mb-3 mt-2 mb-sm-0">
+                  <p className="mb-1 font-size-caption font-color-light">
+                    Postal code/zip code*
+                  </p>
+                  <input
+                    required
+                    autoComplete="postal-code"
+                    name="billingPostalZipcode"
+                    value={billingPostalZipcode}
+                    className="rounded-0 w-100"
                   />
                 </label>
               </div>

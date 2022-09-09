@@ -22,6 +22,7 @@ import {
 import { connect } from 'react-redux';
 import { withRouter } from 'next/router';
 import { CardElement, Elements, ElementsConsumer } from '@stripe/react-stripe-js';
+import PayPalButton from '../../components/checkout/gateways/PayPalButton';
 
 const billingOptions = ['Same as shipping Address', 'Use a different billing address'];
 
@@ -485,6 +486,8 @@ class CheckoutPage extends Component {
     }
 
     //Add GCash and PayPal order here
+    //instead of having the paypal.Buttons({}) in PayPalButton.js for creating order
+    //and approving, we can set it up here instead.
 
     // Capture the order
     this.props.dispatchCaptureOrder(this.props.checkout.id, newOrder)
@@ -516,7 +519,7 @@ class CheckoutPage extends Component {
    */
   renderPaymentDetails() {
     const { checkout, stripe, elements } = this.props;
-    const { selectedGateway, cardNumber, expMonth, expYear, cvc } = this.state;
+    const { selectedGateway, cardNumber, expMonth, expYear, cvc, billingPostalZipcode } = this.state;
 
     return (
       <PaymentDetails
@@ -530,6 +533,7 @@ class CheckoutPage extends Component {
         cvc={cvc}
         stripe={stripe}
         elements={elements}
+        billingPostalZipcode={billingPostalZipcode}
       />
     );
   }
