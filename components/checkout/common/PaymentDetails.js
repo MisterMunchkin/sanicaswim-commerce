@@ -26,6 +26,10 @@ export default class PaymentDetails extends Component {
       return null;
     }
 
+    // onCreditCardChange(event) {
+
+    // }
+
     return (
       <div className="borderbottom border-color-gray500">
         <label
@@ -49,9 +53,10 @@ export default class PaymentDetails extends Component {
                   </p>
                   <input
                     name="cardNumber"
-                    pattern="[0-9. ]+"
+                    type="tel"
+                    pattern="[0-9\s]{13,19}"
                     value={cardNumber}
-                    maxLength="16"
+                    maxLength="19"
                     className="rounded-0 w-100"
                   />
                 </label>
@@ -101,7 +106,7 @@ export default class PaymentDetails extends Component {
               <div className="col-sm-3">
                 <label className="w-100 mb-3 mt-2 mb-sm-0">
                   <p className="mb-1 font-size-caption font-color-light">
-                    Postal code/zip code*
+                    Zip code*
                   </p>
                   <input
                     required
