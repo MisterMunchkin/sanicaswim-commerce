@@ -1,3 +1,5 @@
+@import '../base/vars';
+
 .checkout {
   &__line-item-image {
     @extend .w-56, .h-64, .object-cover;
@@ -15,4 +17,18 @@
     position: sticky;
     top: 15%;
   }
+}
+
+.payment-details-container {
+  display: flex;
+  flex-direction: column;
+  align-content: space-around;
+  align-items: center;
+
+  p {
+    color: $gray-900;
+    padding: 5px;
+  }
+
+  background-color: $gray-100;
 }

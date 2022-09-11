@@ -3,7 +3,7 @@ import { CardElement } from '@stripe/react-stripe-js';
 import PropTypes from 'prop-types';
 import Radiobox from '../../common/atoms/Radiobox';
 import PayPalButton from '../gateways/PayPalButton';
-
+import Image from 'next/image';
 export default class PaymentDetails extends Component {
   /**
    * Render a form for using the Chec test gateway.
@@ -44,7 +44,7 @@ export default class PaymentDetails extends Component {
         </label>
 
         { selectedGateway === 'test_gateway' && (
-          <div className="pl-5 pr-3 pb-3 ml-2">
+          <div className="pl-5 pr-3 pb-3 payment-details-container">
             <div className="row">
               <div className="col-sm-8">
                 <label className="w-100 mb-3 mt-2 mb-sm-0">
@@ -57,7 +57,7 @@ export default class PaymentDetails extends Component {
                     pattern="[0-9\s]{13,19}"
                     value={cardNumber}
                     maxLength="19"
-                    className="rounded-0 w-100"
+                    className="rounded-sm w-100"
                   />
                 </label>
               </div>
@@ -71,7 +71,7 @@ export default class PaymentDetails extends Component {
                     value={cvc}
                     maxLength="3"
                     type="number"
-                    className="rounded-0 w-100"
+                    className="rounded-sm w-100"
                   />
                 </label>
               </div>
@@ -84,7 +84,7 @@ export default class PaymentDetails extends Component {
                     name="expMonth"
                     type="number"
                     value={expMonth}
-                    className="rounded-0 w-100"
+                    className="rounded-sm w-100"
                     placeholder="MM"
                   />
                 </label>
@@ -98,7 +98,7 @@ export default class PaymentDetails extends Component {
                     type="number"
                     name="expYear"
                     value={expYear}
-                    className="rounded-0 w-100"
+                    className="rounded-sm w-100"
                     placeholder="YY"
                   />
                 </label>
@@ -113,7 +113,7 @@ export default class PaymentDetails extends Component {
                     autoComplete="postal-code"
                     name="billingPostalZipcode"
                     value={billingPostalZipcode}
-                    className="rounded-0 w-100"
+                    className="rounded-sm w-100"
                   />
                 </label>
               </div>
@@ -165,7 +165,7 @@ export default class PaymentDetails extends Component {
         </label>
 
         { selectedGateway === 'stripe' && (
-          <div className="pl-5 pr-3 pb-3 ml-2">
+          <div className="pl-5 pr-3 pb-3 payment-details-container">
             <CardElement options={cardElementOptions} />
           </div>
         ) }
@@ -198,8 +198,21 @@ export default class PaymentDetails extends Component {
 
         {
           selectedGateway === 'gcash' && (
-            <div className="pl-5 pr-3 pb-3 ml-2">
-              <label>GCash</label>
+            <div className="pt-5 pl-3 pr-3 pb-3 payment-details-container">
+              <Image
+               src="/images/payment-details/sanicaswim-gcash-code.png"
+               alt="GCash QR Code"
+               layout="fixed"
+               width="202px"
+               height="202px"
+              >
+              </Image>
+
+              <p align="center">Scan the QR Code or send to <br/>
+                <b>+63 906 474 5542</b> <br />
+                <b>Danica Surima</b> <br /> <br />
+                Then click the &quot;Complete Order&quot; button, and send the proof of payment to <b>payments.sanicaswim@gmail.com</b> with the Order ID as the subject.
+              </p>
             </div>
           )
         }
@@ -229,15 +242,17 @@ export default class PaymentDetails extends Component {
             checked={selectedGateway === 'paypal'}
             className="mr-3"
           />
+          <img src="paypal-mark.jpg" alt="Pay with PayPal" />
           <p className="font-weight-medium">PayPal</p>
         </label>
 
         { selectedGateway === 'paypal' && (
-            <div className="pl-5 pr-5 pb-3 ml-2">
-              <PayPalButton
+            <div className="pl-5 pr-5 pb-3 payment-details-container">
+              {/* <PayPalButton
                 live={live}
               >
-              </PayPalButton>
+              </PayPalButton> */}
+              Paypal
             </div>
           )
         }
@@ -256,11 +271,11 @@ export default class PaymentDetails extends Component {
         <p className="font-size-subheader font-weight-semibold mb-3">
           Payment Detail
         </p>
-        <div className="border border-color-gray400 mb-5">
+        <div className="border rounded-sm border-color-gray400 mb-5">
           { this.renderTestGateway() }
           { this.renderStripe() }
           { this.renderGCash() }
-          { this.renderPayPal() }
+          {/* { this.renderPayPal() } */}
           { /* todo support other gateways here */ }
         </div>
       </>

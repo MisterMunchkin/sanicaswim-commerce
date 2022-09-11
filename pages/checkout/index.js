@@ -87,6 +87,8 @@ class CheckoutPage extends Component {
         paymentMethodId: null,
         paymentIntentId: null,
       },
+
+      extraFields: {}
     }
 
     this.captureOrder = this.captureOrder.bind(this);
@@ -210,6 +212,7 @@ class CheckoutPage extends Component {
       .then((checkout) => {
         // continue and dispatch getShippingOptionsForCheckout to get shipping options based on checkout.id
         this.getAllCountries(checkout);
+        this.getAllExtraFields(checkout);
         return dispatchGetShippingOptions(checkout.id, country, region)
       })
       .catch(error => {
@@ -506,6 +509,24 @@ class CheckoutPage extends Component {
     }).catch(error => console.log(error))
   }
 
+  /**
+   * Fetch all extra fields to be used in checkout
+   */
+  getAllExtraFields(checkout) {
+    const extraFields = checkout['extrafields'];
+    var result = {};
+
+    extraFields.forEach(e => {
+      result[e.id] = e;
+    });
+
+    this.setState({
+      extraFields: result
+    });
+
+    console.log(this.state.extraFields);
+  }
+
   toggleNewsletter() {
     this.setState({
       receiveNewsletter: !this.state.receiveNewsletter,
@@ -588,7 +609,7 @@ class CheckoutPage extends Component {
                           <p className="mb-1 font-size-caption font-color-light">
                             First name*
                           </p>
-                          <input required name="customer[first_name]" autoComplete="given-name" value={this.state['customer[first_name]']} className="rounded-0 w-100" />
+                          <input required name="customer[first_name]" autoComplete="given-name" value={this.state['customer[first_name]']} className="rounded-sm w-100" />
                         </label>
                       </div>
                       <div className="col-12 col-sm-6 mb-3">
@@ -596,7 +617,7 @@ class CheckoutPage extends Component {
                           <p className="mb-1 font-size-caption font-color-light">
                             Last name*
                           </p>
-                          <input required name="customer[last_name]" autoComplete="family-name" value={this.state['customer[last_name]']} className="rounded-0 w-100" />
+                          <input required name="customer[last_name]" autoComplete="family-name" value={this.state['customer[last_name]']} className="rounded-sm w-100" />
                         </label>
                       </div>
                     </div>
@@ -610,7 +631,7 @@ class CheckoutPage extends Component {
                             name="customer[phone]"
                             autoComplete="tel"
                             value={this.state['customer[phone]']}
-                            className="rounded-0 w-100"
+                            className="rounded-sm w-100"
                           />
                         </label>
                       </div>
@@ -624,7 +645,7 @@ class CheckoutPage extends Component {
                             name="customer[email]"
                             autoComplete="email"
                             value={this.state['customer[email]']}
-                            className="rounded-0 w-100"
+                            className="rounded-sm w-100"
                           />
                         </label>
                       </div>
@@ -689,7 +710,7 @@ class CheckoutPage extends Component {
                         <p className="mb-1 font-size-caption font-color-light">
                           Order notes (optional)
                         </p>
-                        <textarea name="orderNotes" value={this.state.orderNotes} className="rounded-0 w-100" />
+                        <textarea name="orderNotes" value={this.state.orderNotes} className="rounded-sm w-100" />
                       </label>
                     </div>
 
@@ -735,13 +756,20 @@ class CheckoutPage extends Component {
                     <p className="checkout-error">
                       { !selectedShippingOption ? 'Select a shipping option!' : '' }
                     </p>
-                    <button
-                      type="submit"
-                      className="bg-black font-color-white w-100 border-none h-56 font-weight-semibold d-lg-block"
-                      disabled={!selectedShippingOption}
-                    >
-                      Make payment
-                    </button>
+                    {this.state['selectedGateway'] !== 'paypal' && (
+                      <button
+                        type="submit"
+                        className="bg-black font-color-white w-100 border-none h-56 font-weight-semibold d-lg-block"
+                        disabled={!selectedShippingOption}
+                      >
+                        Make payment
+                      </button>
+                    )}
+
+                    {this.state['selectedGateway'] === 'paypal' && (
+                        <PayPalButton live={checkout.live}></PayPalButton>
+                      )
+                    }
                   </form>
                 )
               }

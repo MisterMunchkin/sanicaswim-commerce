@@ -62,7 +62,7 @@ export default class AddressForm extends Component {
               <p className="mb-1 font-size-caption font-color-light">
                 Full name*
               </p>
-              <input required name={`${type}[name]`} autoComplete="name" value={name} className="rounded-0 w-100" />
+              <input required name={`${type}[name]`} autoComplete="name" value={name} className="rounded-sm w-100" />
             </label>
           </div>
         </div>
@@ -92,7 +92,7 @@ export default class AddressForm extends Component {
           <div className="col-12 col-sm-6 mb-3">
             <label className="w-100">
               <p className="mb-1 font-size-caption font-color-light">City*</p>
-              <input required name={`${type}[town_city]`} autoComplete="address-level2" value={townCity} className="rounded-0 w-100" />
+              <input required name={`${type}[town_city]`} autoComplete="address-level2" value={townCity} className="rounded-sm w-100" />
             </label>
           </div>
         </div>
@@ -107,7 +107,7 @@ export default class AddressForm extends Component {
                 autoComplete="street-address"
                 name={`${type}[street]`}
                 value={street}
-                className="rounded-0 w-100"
+                className="rounded-sm w-100"
                 placeholder="House number, steet address, etc."
               />
             </label>
@@ -120,7 +120,7 @@ export default class AddressForm extends Component {
               <input
                 name={`${type}[street_2]`}
                 value={street2}
-                className="rounded-0 w-100"
+                className="rounded-sm w-100"
                 placeholder="Apartment, suite number, etc."
               />
             </label>
@@ -159,7 +159,7 @@ export default class AddressForm extends Component {
                 autoComplete="postal-code"
                 name={`${type}[postal_zip_code]`}
                 value={postalZipCode}
-                className="rounded-0 w-100"
+                className="rounded-sm w-100"
               />
             </label>
           </div>
