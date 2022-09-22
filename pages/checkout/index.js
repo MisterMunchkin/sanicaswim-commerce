@@ -491,6 +491,17 @@ class CheckoutPage extends Component {
     //Add GCash and PayPal order here
     //instead of having the paypal.Buttons({}) in PayPalButton.js for creating order
     //and approving, we can set it up here instead.
+    if (this.state.selectedGateway === 'gcash') {
+      this.setState({
+        loading: true
+      });
+
+      newOrder.payment.gateway = 'manual';
+
+      newOrder.payment.manual = {
+        id: process.env.gcashManualPaymentID
+      }
+    }
 
     // Capture the order
     this.props.dispatchCaptureOrder(this.props.checkout.id, newOrder)

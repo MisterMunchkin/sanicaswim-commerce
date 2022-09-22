@@ -90,6 +90,19 @@ class Confirm extends Component {
     );
   }
 
+  renderGCashInstructions() {
+    const { orderReceipt } = this.props;
+    const payment = orderReceipt.order;
+
+    console.log(payment);
+
+    return (
+      <div className='d-flex justify-content-between align-items-center mb-2'>
+        <p>Incase you didn't pay through GCash yet or forgot to save the QR code, here are the payment instructions</p>
+      </div>
+    );
+  }
+
   render() {
     const { orderReceipt } = this.props;
 
@@ -116,6 +129,9 @@ class Confirm extends Component {
                 <p className="text-center font-color-light mb-5">
                   Here is your order number for reference: {orderReceipt.customer_reference}
                 </p>
+                <div className="align-items-center justify-content-center mb-4">
+                  { this.renderGCashInstructions() }
+                </div>
                 <div className="d-flex w-100 justify-content-center flex-column flex-sm-row">
                   <Link href="/">
                     <a className="checkout-confirm-buttons px-3 py-3 text-center flex-grow-1 border bg-white border-color-gray500 font-color-light mb-2 mb-sm-0 mr-sm-2 no-print">

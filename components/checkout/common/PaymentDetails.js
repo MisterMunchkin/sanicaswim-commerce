@@ -177,7 +177,7 @@ export default class PaymentDetails extends Component {
     const { gateways, onChangeGateway, selectedGateway } = this.props;
 
     //gcash gateway id gway_3wpgx6AxvdxxlY
-    var  gcashGateway = gateways?.manual?.find(m => m.id === 'gway_3wpgx6AxvdxxlY');
+    var  gcashGateway = gateways?.manual?.find(m => m.id === process.env.gcashManualPaymentID);
 
     if (!gateways || !gateways.available['manual'] || !gcashGateway) {
       return null;
